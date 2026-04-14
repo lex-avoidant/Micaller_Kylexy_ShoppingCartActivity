@@ -1,1 +1,2 @@
-# Micaller_Kylexy_ShoppingCartActivity
+# Shopping Cart Activity
+Quiz 2 and 3
