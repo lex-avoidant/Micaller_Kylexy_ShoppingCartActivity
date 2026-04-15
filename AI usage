@@ -1,3 +1,4 @@
-I used AI as a guide while developing my Shopping Cart System. In particular, I used AI to help me understand how to structure the program using classes such as Product and Cart, and how to organize the flow of the system.
-
-AI also assisted me in implementing input validation using int.TryParse(), handling errors like unassigned variables, and resolving warnings related to null values. Additionally, I asked for help in improving parts of the code such as the loop structure, preventing duplicate items in the cart, and formatting the output.
+I used AI as a guide while developing my Shopping Cart System. 
+In particular, I used AI to help me understand how to structure the program using classes such as Product and Cart, and how to organize the flow of the system.
+AI also assisted me in implementing input validation using int.TryParse(), handling errors like unassigned variables, and resolving warnings related to null values.
+Additionally, I asked for help in improving parts of the code such as the loop structure, preventing duplicate items in the cart, and formatting the output.
