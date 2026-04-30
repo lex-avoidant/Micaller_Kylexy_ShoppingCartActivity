@@ -77,7 +77,8 @@ class Program
                 case "2": SearchProduct(); break;
                 case "3": CartMenu(); break;
                 case "4": ViewHistory(); break;
-                case "5": return;
+                case "5": Console.WriteLine("\nEnding Transaction... Thank you.");
+                return;
                 default: Console.WriteLine("Invalid choice."); break;
             }
         }
@@ -298,6 +299,7 @@ class Program
         Console.WriteLine($"Total Paid:    Php {payment}");
         Console.WriteLine($"Change:        Php {payment - finalAmount}");
         Console.WriteLine("******************************");
+        Console.WriteLine("   Thank you for shopping!");
 
         orderHistory.Add(new Transaction { ReceiptNumber = rNum, Date = DateTime.Now, FinalTotal = finalAmount });
         receiptCounter++;
