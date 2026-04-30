@@ -8,7 +8,7 @@ Quiz 2 and 3
 - Handles out-of-stock items
 - Shopping cart system that updates quantity if the same item is selected again
 - Computes subtotal and grand total
-- Applies a discount (5% if total ≥ 500)
+- Applies a discount (10% if total ≥ 5000)
 - Displays final receipt and updated stock after checkout
 # AI Usage
 - I used AI as a guide while developing my Shopping Cart System. In particular, I used AI to help me understand how to structure the program using classes such as Product and Cart, and how to organize the flow of the system. AI also assisted me in implementing input validation using int.TryParse(), handling errors like unassigned variables, and resolving warnings related to null values. Additionally, I asked for help in improving parts of the code such as the loop structure, preventing duplicate items in the cart, and formatting the output.
