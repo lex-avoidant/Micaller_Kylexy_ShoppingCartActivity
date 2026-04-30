@@ -85,7 +85,7 @@ class Program
     {
         Console.WriteLine("\n--- PRODUCT/CATEGORY DISPLAY ---");
         Console.WriteLine("1. View All Products");
-        
+
         var categories = products.Select(p => p.Category).Distinct().ToList();
         for (int i = 0; i < categories.Count; i++)
         {
@@ -278,7 +278,7 @@ class Program
         Console.WriteLine("------------------------------");
         Console.WriteLine($"Grand Total:   Php {grandTotal}");
         Console.WriteLine($"Discount:      -Php {discount}");
-        Console.WriteLine($"FINAL TOTAL:   Php {finalAmount}"); 
+        Console.WriteLine($"FINAL TOTAL:   Php {finalAmount}");
         Console.WriteLine("------------------------------");
         Console.WriteLine($"Total Paid:    Php {payment}");
         Console.WriteLine($"Change:        Php {payment - finalAmount}");
@@ -291,10 +291,8 @@ class Program
         Console.WriteLine("\n[System Notification]");
         var lowStock = products.Where(p => p.RemainingStock <= p.ReorderLevel).ToList();
         if (lowStock.Any())
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            foreach (var p in lowStock) Console.WriteLine($"! LOW STOCK: {p.Name} ({p.RemainingStock} left)");
-            Console.ResetColor();
+        { 
+            foreach (var p in lowStock) Console.WriteLine($"LOW STOCK: {p.Name} ({p.RemainingStock} left)");
         }
     }
 
