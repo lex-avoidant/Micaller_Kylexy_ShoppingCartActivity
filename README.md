@@ -40,3 +40,4 @@ Prompts/questions asked:
 "Explain the receipt generation."
 "The output on visual studio does not change, how can I fix it?"
 "Help me fix the errors on my cart management menu."
+"How can I make my validation more better?"
