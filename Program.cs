@@ -59,6 +59,8 @@ class Program
     {
         while (true)
         {
+            CheckLowStock();
+
             Console.WriteLine("\n--- FLOWER SHOP MAIN MENU ---");
             Console.WriteLine("1. View Products to Order");
             Console.WriteLine("2. Search Product");
@@ -77,6 +79,19 @@ class Program
                 case "4": ViewHistory(); break;
                 case "5": return;
                 default: Console.WriteLine("Invalid choice."); break;
+            }
+        }
+    }
+
+    static void CheckLowStock()
+    {
+        var lowStock = products.Where(p => p.RemainingStock <= p.ReorderLevel).ToList();
+        if (lowStock.Any())
+        {
+            Console.WriteLine("\n[System Notification: Low Stock Alert]");
+            foreach (var p in lowStock)
+            {
+                Console.WriteLine($"{p.Name} ({p.RemainingStock} left)");
             }
         }
     }
@@ -288,12 +303,7 @@ class Program
         receiptCounter++;
         cart.Clear();
 
-        Console.WriteLine("\n[System Notification]");
-        var lowStock = products.Where(p => p.RemainingStock <= p.ReorderLevel).ToList();
-        if (lowStock.Any())
-        { 
-            foreach (var p in lowStock) Console.WriteLine($"LOW STOCK: {p.Name} ({p.RemainingStock} left)");
-        }
+        CheckLowStock();
     }
 
     static void ViewHistory()
