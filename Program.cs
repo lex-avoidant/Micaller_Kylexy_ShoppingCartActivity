@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 class Product
 {
@@ -50,14 +52,14 @@ class Program
     };
 
     static List<CartItem> cart = new List<CartItem>();
-    static List<Transaction> orderHistory = new List<Transaction>(); //
+    static List<Transaction> orderHistory = new List<Transaction>();
     static int receiptCounter = 1;
 
     static void Main()
     {
         while (true)
         {
-            Console.WriteLine("--- FLOWER SHOP MAIN MENU ---");
+            Console.WriteLine("\n--- FLOWER SHOP MAIN MENU ---");
             Console.WriteLine("1. View Products to Order");
             Console.WriteLine("2. Search Product");
             Console.WriteLine("3. Cart Management (" + cart.Count + " items)");
@@ -69,7 +71,7 @@ class Program
 
             switch (choice)
             {
-                case "1": DisplayAllByCategory(); break;
+                case "1": ShowProductMenu(); break;
                 case "2": SearchProduct(); break;
                 case "3": CartMenu(); break;
                 case "4": ViewHistory(); break;
@@ -77,6 +79,46 @@ class Program
                 default: Console.WriteLine("Invalid choice."); break;
             }
         }
+    }
+
+    static void ShowProductMenu()
+    {
+        Console.WriteLine("\n--- PRODUCT/CATEGORY DISPLAY ---");
+        Console.WriteLine("1. View All Products");
+        
+        var categories = products.Select(p => p.Category).Distinct().ToList();
+        for (int i = 0; i < categories.Count; i++)
+        {
+            Console.WriteLine($"{i + 2}. {categories[i]}");
+        }
+
+        Console.Write("Select option: ");
+        string input = Console.ReadLine() ?? "";
+
+        if (input == "1")
+        {
+            DisplayAllByCategory();
+        }
+        else if (int.TryParse(input, out int catIdx) && catIdx > 1 && catIdx <= categories.Count + 1)
+        {
+            string selectedCat = categories[catIdx - 2];
+            DisplaySingleCategory(selectedCat);
+        }
+        else
+        {
+            Console.WriteLine("Invalid selection.");
+        }
+    }
+
+    static void DisplaySingleCategory(string category)
+    {
+        Console.WriteLine($"\n--- {category.ToUpper()} ---");
+        Console.WriteLine("ID  | Name            | Price        | Stock");
+        Console.WriteLine("------------------------------------------------");
+        var items = products.Where(p => p.Category == category);
+        foreach (var item in items) item.DisplayProduct();
+
+        if (GetYN("\nWould you like to add an item to your cart?")) AddToCart();
     }
 
     static void DisplayAllByCategory()
@@ -89,16 +131,10 @@ class Program
             Console.WriteLine("ID  | Name            | Price        | Stock");
             Console.WriteLine("------------------------------------------------");
             var itemsInCategory = products.Where(p => p.Category == category);
-            foreach (var item in itemsInCategory)
-            {
-                item.DisplayProduct();
-            }
+            foreach (var item in itemsInCategory) item.DisplayProduct();
         }
 
-        if (GetYN("\nWould you like to add an item to your cart?"))
-        {
-            AddToCart();
-        }
+        if (GetYN("\nWould you like to add an item to your cart?")) AddToCart();
     }
 
     static void SearchProduct()
@@ -218,7 +254,6 @@ class Program
 
     static void Checkout(double grandTotal)
     {
-
         double discount = grandTotal >= 5000 ? grandTotal * 0.10 : 0;
         double finalAmount = grandTotal - discount;
 
