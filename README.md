@@ -28,3 +28,15 @@ I enhanced the original Flower Shop Shopping Cart System by adding full cart man
 The checkout process was improved by adding payment validation to ensure that payment is numeric and sufficient before completing the transaction. The correct discount rule was applied, which gives a 10% discount for purchases worth Php 5000 and above. Receipt generation was also improved by including receipt number, date and time, purchased items, grand total, discount, final total, payment, and change.
 
 I added low stock alerts for products with remaining stock less than or equal to 5 to help monitor inventory. Order history was also implemented to store completed transactions and allow users to review previous purchases. Lastly, I improved input validation for all Y/N prompts so that the program only accepts valid inputs (Y or N).
+
+# AI Usage
+
+AI Usage
+
+I used AI as a guide to improve and debug the Flower Shop Shopping Cart System. I made AI explain and assist on what I should do to make my code work. I also used AI to help me with Github. 
+
+Prompts/questions asked:
+"How to make a new branch on Github?"
+"Explain the receipt generation."
+"The output on visual studio does not change, how can I fix it?"
+"Help me fix the errors on my cart management menu."
