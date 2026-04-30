@@ -1,5 +1,5 @@
 # Shopping Cart Activity 
-Includes the updated features, summary of changes, and AI usage.
+Includes the updated features and AI usage.
 # Updated Features
 - Product Categories (Flowers, Fillers) for better product organization
 - Display products grouped by category
@@ -22,17 +22,7 @@ Includes the updated features, summary of changes, and AI usage.
 - View previous transactions with receipt number, date, and final total
 - Strong Y/N input validation (accepts only Y or N)
 
-# Summary of Changes
-I enhanced the original Flower Shop Shopping Cart System by adding full cart management features such as viewing the cart, updating item quantity, removing items, clearing the cart, and checking out. I also added product categories and grouped the products by category for better organization, along with a product search feature that allows users to search by product name or category.
-
-The checkout process was improved by adding payment validation to ensure that payment is numeric and sufficient before completing the transaction. The correct discount rule was applied, which gives a 10% discount for purchases worth Php 5000 and above. Receipt generation was also improved by including receipt number, date and time, purchased items, grand total, discount, final total, payment, and change.
-
-I added low stock alerts for products with remaining stock less than or equal to 5 to help monitor inventory. Order history was also implemented to store completed transactions and allow users to review previous purchases. Lastly, I improved input validation for all Y/N prompts so that the program only accepts valid inputs (Y or N).
-
 # AI Usage
-
-AI Usage
-
 I used AI as a guide to improve and debug the Flower Shop Shopping Cart System. I made AI explain and assist on what I should do to make my code work. I also used AI to help me with Github. 
 
 Prompts/questions asked:
