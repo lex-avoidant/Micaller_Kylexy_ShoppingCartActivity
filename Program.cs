@@ -149,3 +149,71 @@ class Program
             else Console.WriteLine("Invalid quantity or inventory shortage.");
         }
     }
+
+    static void CartMenu()
+{
+    while (true)
+    {
+        Console.WriteLine("\n--- YOUR SHOPPING CART ---");
+        if (cart.Count == 0) { Console.WriteLine("Your cart is empty."); break; }
+
+        double total = 0;
+        for (int i = 0; i < cart.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. [{cart[i].Product.Category}] {cart[i].Product.Name} (x{cart[i].Quantity}) - Php {cart[i].Subtotal}");
+            total += cart[i].Subtotal;
+        }
+        Console.WriteLine($"\nSubtotal: Php {total}");
+        Console.WriteLine("1. Checkout\n2. Update Quantity\n3. Remove Item\n4. Clear Cart\n5. Back to Main Menu");
+        Console.Write("Selection: ");
+        string c = Console.ReadLine() ?? "";
+
+        if (c == "1") { Checkout(total); break; }
+        if (c == "2") UpdateCartItem();
+        if (c == "3") RemoveFromCart();
+        if (c == "4")
+        {
+            foreach (var item in cart) item.Product.RestoreStock(item.Quantity);
+            cart.Clear();
+            Console.WriteLine("Cart emptied.");
+            break;
+        }
+        if (c == "5") break;
+    }
+}
+
+static void UpdateCartItem()
+{
+    Console.Write("Enter item number to update: ");
+    if (int.TryParse(Console.ReadLine(), out int idx) && idx > 0 && idx <= cart.Count)
+    {
+        var item = cart[idx - 1];
+        item.Product.RestoreStock(item.Quantity);
+
+        Console.Write($"Enter new quantity for {item.Product.Name} (Available: {item.Product.RemainingStock}): ");
+        if (int.TryParse(Console.ReadLine(), out int newQty) && newQty > 0 && newQty <= item.Product.RemainingStock)
+        {
+            item.Quantity = newQty;
+            item.Product.ReduceStock(newQty);
+            Console.WriteLine("Quantity updated.");
+        }
+        else
+        {
+            Console.WriteLine("Invalid quantity. Restoring original amount.");
+            item.Product.ReduceStock(item.Quantity);
+        }
+    }
+}
+
+static void RemoveFromCart()
+{
+    Console.Write("Enter item number to remove: ");
+    if (int.TryParse(Console.ReadLine(), out int idx) && idx > 0 && idx <= cart.Count)
+    {
+        cart[idx - 1].Product.RestoreStock(cart[idx - 1].Quantity);
+        cart.RemoveAt(idx - 1);
+        Console.WriteLine("Item removed from cart.");
+    }
+}
+
+}
