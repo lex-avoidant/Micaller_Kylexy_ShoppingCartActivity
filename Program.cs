@@ -218,7 +218,7 @@ class Program
 
     static void Checkout(double grandTotal)
     {
-        // Rule: 10% discount for purchases Php 5000 and above
+
         double discount = grandTotal >= 5000 ? grandTotal * 0.10 : 0;
         double finalAmount = grandTotal - discount;
 
@@ -243,7 +243,7 @@ class Program
         Console.WriteLine("------------------------------");
         Console.WriteLine($"Grand Total:   Php {grandTotal}");
         Console.WriteLine($"Discount:      -Php {discount}");
-        Console.WriteLine($"FINAL TOTAL:   Php {finalAmount}"); // Added this for clear math transparency
+        Console.WriteLine($"FINAL TOTAL:   Php {finalAmount}"); 
         Console.WriteLine("------------------------------");
         Console.WriteLine($"Total Paid:    Php {payment}");
         Console.WriteLine($"Change:        Php {payment - finalAmount}");
