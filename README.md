@@ -1,19 +1,34 @@
-# Shopping Cart Activity
-Quiz 2 and 3
-# Features
-- Displays a list of flower products with price and remaining stock
-- Allows user to select products using Product ID
-- Validates user input using int.TryParse()
-- Prevents purchasing more than available stock
-- Handles out-of-stock items
-- Shopping cart system that updates quantity if the same item is selected again
-- Computes subtotal and grand total
-- Applies a discount (10% if total ≥ 5000)
-- Displays final receipt and updated stock after checkout
+# Shopping Cart Activity 
+Includes the updated features and AI usage.
+# Updated Features
+- Product Categories (Flowers, Fillers) for better product organization
+- Display products grouped by category
+- Product search by product name or category
+- Add to cart with stock validation
+- Cart Management Menu:
+   - View cart
+   - Update item quantity
+   - Remove item from cart
+   - Clear cart
+   - Checkout
+- Automatic stock reduction after adding items to cart
+- Stock restoration when updating quantity or removing items
+- Payment validation during checkout
+- Re-prompt for invalid or insufficient payment
+- 10% discount for purchases worth Php 5000 and above
+- Receipt generation with all the requirements
+- Low stock alert for products with stock less than or equal to reorder level (5)
+- Order history storage for completed transactions
+- View previous transactions with receipt number, date, and final total
+- Strong Y/N input validation (accepts only Y or N)
+
 # AI Usage
-- I used AI as a guide while developing my Shopping Cart System. In particular, I used AI to help me understand how to structure the program using classes such as Product and Cart, and how to organize the flow of the system. AI also assisted me in implementing input validation using int.TryParse(), handling errors like unassigned variables, and resolving warnings related to null values. Additionally, I asked for help in improving parts of the code such as the loop structure, preventing duplicate items in the cart, and formatting the output.
-- Here are some of the prompts/questions I asked:
-- "Help me understand the errors so I could fix it."
-- "How do I calculate a 10% discount on a grandTotal variable in C# only if the value is 5000 or higher?"
-- "What is What is int.TryParse?"
-- "How do I use Github? How to add collaborator?"
+I used AI as a guide to improve and debug the Flower Shop Shopping Cart System. I made AI explain and assist on what I should do to make my code work. I also used AI to help me with Github. 
+
+Prompts/questions asked:
+"How to make a new branch on Github?"
+"Explain the receipt generation."
+"The output on visual studio does not change, how can I fix it?"
+"Help me fix the errors on my cart management menu."
+"How can I make my validation more better?"
+"What is pull request? How do I pull request?"
