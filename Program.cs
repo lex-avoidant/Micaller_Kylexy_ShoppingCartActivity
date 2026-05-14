@@ -4,34 +4,64 @@ using System.Linq;
 
 class Product
 {
-    public int Id;
-    public string Name = "";
-    public string Category = "";
-    public double Price;
-    public int RemainingStock;
-    public int ReorderLevel = 5;
+    private int _id;
+    private string _name = "";
+    private string _category = "";
+    private double _price;
+    private int _remainingStock;
+    private int _reorderLevel = 5;
+
+    public int Id => _id;
+    public string Name => _name;
+    public string Category => _category;
+    public double Price => _price;
+    public int RemainingStock => _remainingStock;
+    public int ReorderLevel => _reorderLevel;
+
+    public Product(int id, string name, string category, double price, int stock)
+    {
+        _id = id;
+        _name = name;
+        _category = category;
+        _price = price;
+        _remainingStock = stock;
+    }
 
     public void DisplayProduct()
     {
-        Console.WriteLine($"{Id,-3} | {Name,-15} | Php {Price,-8} | Stock: {RemainingStock}");
+        Console.WriteLine($"{_id,-3} | {_name,-15} | Php {_price,-8} | Stock: {_remainingStock}");
     }
 
-    public void ReduceStock(int quantity) => RemainingStock -= quantity;
-    public void RestoreStock(int quantity) => RemainingStock += quantity;
+    public void ReduceStock(int quantity) => _remainingStock -= quantity;
+    public void RestoreStock(int quantity) => _remainingStock += quantity;
 }
 
 class CartItem
 {
-    public Product Product { get; set; } = new Product();
+    public Product Product { get; private set; }
     public int Quantity { get; set; }
+
     public double Subtotal => Product.Price * Quantity;
+
+    public CartItem(Product product, int quantity)
+    {
+        Product = product;
+        Quantity = quantity;
+    }
 }
 
 class Transaction
 {
-    public string ReceiptNumber = "";
-    public DateTime Date;
-    public double FinalTotal;
+    public string ReceiptNumber { get; }
+    public DateTime Date { get; }
+    public double FinalTotal { get; }
+
+    public Transaction(string receiptNumber, DateTime date, double finalTotal)
+    {
+        ReceiptNumber = receiptNumber;
+        Date = date;
+        FinalTotal = finalTotal;
+    }
 
     public void DisplayHistory()
     {
@@ -41,19 +71,19 @@ class Transaction
 
 class Program
 {
-    static List<Product> products = new List<Product>
+    private static List<Product> products = new List<Product>
     {
-        new Product { Id = 1, Name = "Lilies", Category = "Flowers", Price = 450, RemainingStock = 25 },
-        new Product { Id = 2, Name = "Daisies", Category = "Flowers", Price = 350, RemainingStock = 21 },
-        new Product { Id = 3, Name = "Roses", Category = "Flowers", Price = 400, RemainingStock = 18 },
-        new Product { Id = 4, Name = "Tulips", Category = "Flowers", Price = 300, RemainingStock = 19 },
-        new Product { Id = 5, Name = "Baby's breath", Category = "Fillers", Price = 200, RemainingStock = 35 },
-        new Product { Id = 6, Name = "Fern Leaves", Category = "Fillers", Price = 200, RemainingStock = 30 }
+        new Product(1, "Lilies", "Flowers", 450, 25),
+        new Product(2, "Daisies", "Flowers", 350, 21),
+        new Product(3, "Roses", "Flowers", 400, 18),
+        new Product(4, "Tulips", "Flowers", 300, 19),
+        new Product(5, "Baby's breath", "Fillers", 200, 35),
+        new Product(6, "Fern Leaves", "Fillers", 200, 30)
     };
 
-    static List<CartItem> cart = new List<CartItem>();
-    static List<Transaction> orderHistory = new List<Transaction>();
-    static int receiptCounter = 1;
+    private static List<CartItem> cart = new List<CartItem>();
+    private static List<Transaction> orderHistory = new List<Transaction>();
+    private static int receiptCounter = 1;
 
     static void Main()
     {
@@ -77,8 +107,7 @@ class Program
                 case "2": SearchProduct(); break;
                 case "3": CartMenu(); break;
                 case "4": ViewHistory(); break;
-                case "5": Console.WriteLine("\nEnding Transaction... Thank you.");
-                return;
+                case "5": Console.WriteLine("\nEnding Transaction... Thank you."); return;
                 default: Console.WriteLine("Invalid choice."); break;
             }
         }
@@ -111,19 +140,12 @@ class Program
         Console.Write("Select option: ");
         string input = Console.ReadLine() ?? "";
 
-        if (input == "1")
-        {
-            DisplayAllByCategory();
-        }
+        if (input == "1") DisplayAllByCategory();
         else if (int.TryParse(input, out int catIdx) && catIdx > 1 && catIdx <= categories.Count + 1)
         {
-            string selectedCat = categories[catIdx - 2];
-            DisplaySingleCategory(selectedCat);
+            DisplaySingleCategory(categories[catIdx - 2]);
         }
-        else
-        {
-            Console.WriteLine("Invalid selection.");
-        }
+        else Console.WriteLine("Invalid selection.");
     }
 
     static void DisplaySingleCategory(string category)
@@ -140,7 +162,6 @@ class Program
     static void DisplayAllByCategory()
     {
         var categories = products.Select(p => p.Category).Distinct();
-
         foreach (var category in categories)
         {
             Console.WriteLine($"\n--- {category.ToUpper()} ---");
@@ -157,26 +178,14 @@ class Program
     {
         Console.Write("\nEnter product name to search: ");
         string search = Console.ReadLine()?.ToLower() ?? "";
-
         var filtered = products.Where(p => p.Name.ToLower().Contains(search) || p.Category.ToLower().Contains(search)).ToList();
 
-        if (filtered.Count == 0)
-        {
-            Console.WriteLine("No matches found.");
-            return;
-        }
+        if (filtered.Count == 0) { Console.WriteLine("No matches found."); return; }
 
         Console.WriteLine("\nSearch Results:");
-        foreach (var p in filtered)
-        {
-            Console.Write($"[{p.Category}] ");
-            p.DisplayProduct();
-        }
+        foreach (var p in filtered) { Console.Write($"[{p.Category}] "); p.DisplayProduct(); }
 
-        if (GetYN("Add one of these to cart?"))
-        {
-            AddToCart();
-        }
+        if (GetYN("Add one of these to cart?")) AddToCart();
     }
 
     static void AddToCart()
@@ -193,7 +202,7 @@ class Program
             {
                 var existing = cart.FirstOrDefault(c => c.Product.Id == id);
                 if (existing != null) existing.Quantity += qty;
-                else cart.Add(new CartItem { Product = selected, Quantity = qty });
+                else cart.Add(new CartItem(selected, qty));
 
                 selected.ReduceStock(qty);
                 Console.WriteLine($"Success! {qty} {selected.Name} added to cart.");
@@ -216,7 +225,7 @@ class Program
                 total += cart[i].Subtotal;
             }
             Console.WriteLine($"\nSubtotal: Php {total}");
-            Console.WriteLine("1. Checkout\n2. Update Quantity\n3. Remove Item\n4. Clear Cart\n5. Back to Main Menu");
+            Console.WriteLine("1. Checkout\n2. Update Quantity\n3. Remove Item\n4. Clear Cart\n5. Back");
             Console.Write("Selection: ");
             string c = Console.ReadLine() ?? "";
 
@@ -241,19 +250,14 @@ class Program
         {
             var item = cart[idx - 1];
             item.Product.RestoreStock(item.Quantity);
-
-            Console.Write($"Enter new quantity for {item.Product.Name} (Available: {item.Product.RemainingStock}): ");
+            Console.Write($"Enter new quantity for {item.Product.Name}: ");
             if (int.TryParse(Console.ReadLine(), out int newQty) && newQty > 0 && newQty <= item.Product.RemainingStock)
             {
                 item.Quantity = newQty;
                 item.Product.ReduceStock(newQty);
                 Console.WriteLine("Quantity updated.");
             }
-            else
-            {
-                Console.WriteLine("Invalid quantity. Restoring original amount.");
-                item.Product.ReduceStock(item.Quantity);
-            }
+            else item.Product.ReduceStock(item.Quantity);
         }
     }
 
@@ -264,7 +268,7 @@ class Program
         {
             cart[idx - 1].Product.RestoreStock(cart[idx - 1].Quantity);
             cart.RemoveAt(idx - 1);
-            Console.WriteLine("Item removed from cart.");
+            Console.WriteLine("Item removed.");
         }
     }
 
@@ -272,7 +276,6 @@ class Program
     {
         double discount = grandTotal >= 5000 ? grandTotal * 0.10 : 0;
         double finalAmount = grandTotal - discount;
-
         Console.WriteLine($"\nFinal Amount Due: Php {finalAmount}");
 
         double payment = 0;
@@ -280,7 +283,7 @@ class Program
         {
             Console.Write("Enter payment: ");
             if (double.TryParse(Console.ReadLine(), out payment) && payment >= finalAmount) break;
-            Console.WriteLine("Error: Insufficient payment or invalid format.");
+            Console.WriteLine("Error: Insufficient payment.");
         }
 
         string rNum = receiptCounter.ToString("D4");
@@ -301,11 +304,10 @@ class Program
         Console.WriteLine("******************************");
         Console.WriteLine("   Thank you for shopping!");
 
-        orderHistory.Add(new Transaction { ReceiptNumber = rNum, Date = DateTime.Now, FinalTotal = finalAmount });
+
+        orderHistory.Add(new Transaction(rNum, DateTime.Now, finalAmount));
         receiptCounter++;
         cart.Clear();
-
-        CheckLowStock();
     }
 
     static void ViewHistory()
